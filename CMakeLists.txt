@@ -25,9 +25,19 @@ set(LIBTEX3DS_SRC
 )
 
 add_library(libtex3ds STATIC ${LIBTEX3DS_SRC})
+set_target_properties(libtex3ds
+PROPERTIES
+    OUTPUT_NAME tex3ds
+    PUBLIC_HEADER "public/libtex3ds.h"
+)
 
 target_include_directories(libtex3ds PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_include_directories(libtex3ds PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/public)
+
+install(TARGETS libtex3ds
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
