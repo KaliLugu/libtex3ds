@@ -6,6 +6,8 @@ if(POLICY CMP0069) # Allow CMAKE_INTERPROCEDURAL_OPTIMIZATION (lto) to be set
     cmake_policy(SET CMP0069 NEW)
 endif()
 
+set(CMAKE_CXX_STANDARD 11)
+
 project(libtex3ds VERSION 0.0 LANGUAGES CXX)
 
 set(LIBTEX3DS_SRC
