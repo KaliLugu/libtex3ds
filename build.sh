@@ -11,3 +11,4 @@ make -C build
 
 # copy lib to current directory
 cp build/libtex3ds.a ./
+cp public/*.h ./
