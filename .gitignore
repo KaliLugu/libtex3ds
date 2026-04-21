@@ -1,6 +1,3 @@
-*.bin
-*.jpg
-*.png
 AUTHORS
 ChangeLog
 Doxyfile
@@ -27,4 +24,5 @@ stamp-h1
 tex3ds
 build
 *.a
-*.h
+libtex3ds.h
+main
