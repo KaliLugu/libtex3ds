@@ -26,3 +26,4 @@ build
 *.a
 libtex3ds.h
 main
+output.t3x

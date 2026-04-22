@@ -29,21 +29,16 @@
 #include "subimage.h"
 #include "swizzle.h"
 
-#include <getopt.h>
-#include <libgen.h>
-
 #include <algorithm>
 #include <cassert>
 #include <climits>
 #include <cmath>
-#include <condition_variable>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <queue>
 #include <set>
 #include <stdexcept>
-#include <thread>
 #include <vector>
 
 namespace Tex3DS
@@ -270,7 +265,7 @@ void write_buffer (FILE *fp, const void *buffer, size_t size)
 
 	while (pos < size)
 	{
-		ssize_t rc = std::fwrite (buf + pos, 1, size - pos, fp);
+		size_t rc = std::fwrite (buf + pos, 1, size - pos, fp);
 		if (rc <= 0)
 		{
 			std::fclose (fp);
