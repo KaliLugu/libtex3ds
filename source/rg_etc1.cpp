@@ -935,8 +935,8 @@ namespace rg_etc1
          b = (b * 31U + bias) / 255U;
       }
 
-      r = std::min(r, (uint32_t)31);
-      g = std::min(g, (uint32_t)31);
+      r = std::min(r, (uint32_t)31);;
+      g = std::min(g, (uint32_t)31);;
       b = std::min(b, (uint32_t)31);
 
       return static_cast<uint16_t>(b | (g << 5U) | (r << 10U));
@@ -1039,6 +1039,7 @@ namespace rg_etc1
          g = (g * 15U + bias) / 255U;
          b = (b * 15U + bias) / 255U;
       }
+
       r = std::min(r, (uint32_t)15);
       g = std::min(g, (uint32_t)15);
       b = std::min(b, (uint32_t)15);
