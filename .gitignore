@@ -27,3 +27,7 @@ build
 libtex3ds.h
 main
 output.t3x
+*.t3x
+*.smdh
+*.3dsx
+*.elf

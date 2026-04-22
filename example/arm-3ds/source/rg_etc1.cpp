@@ -935,9 +935,9 @@ namespace rg_etc1
          b = (b * 31U + bias) / 255U;
       }
 
-      r = std::min(r, 31U);
-      g = std::min(g, 31U);
-      b = std::min(b, 31U);
+      r = std::min(r, (uint32_t)31);;
+      g = std::min(g, (uint32_t)31);;
+      b = std::min(b, (uint32_t)31);
 
       return static_cast<uint16_t>(b | (g << 5U) | (r << 10U));
    }
@@ -955,7 +955,7 @@ namespace rg_etc1
          r = (r << 3U) | (r >> 2U);
       }
 
-      return color_quad_u8(cNoClamp, r, g, b, std::min(alpha, 255U));
+      return color_quad_u8(cNoClamp, r, g, b, std::min(alpha, (uint32_t)255));
    }
 
    void etc1_block::unpack_color5(uint32_t& r, uint32_t& g, uint32_t& b, uint16_t packed_color5, bool scaled)
@@ -991,7 +991,7 @@ namespace rg_etc1
          r = (r << 3U) | (r >> 2U);
       }
 
-      result.set_noclamp_rgba(r, g, b, std::min(alpha, 255U));
+      result.set_noclamp_rgba(r, g, b, std::min(alpha, (uint32_t)255));
       return success;
    }
 
@@ -1040,9 +1040,9 @@ namespace rg_etc1
          b = (b * 15U + bias) / 255U;
       }
 
-      r = std::min(r, 15U);
-      g = std::min(g, 15U);
-      b = std::min(b, 15U);
+      r = std::min(r, (uint32_t)15);
+      g = std::min(g, (uint32_t)15);
+      b = std::min(b, (uint32_t)15);
 
       return static_cast<uint16_t>(b | (g << 4U) | (r << 8U));
    }
@@ -1060,7 +1060,7 @@ namespace rg_etc1
          r = (r << 4U) | r;
       }
 
-      return color_quad_u8(cNoClamp, r, g, b, std::min(alpha, 255U));
+      return color_quad_u8(cNoClamp, r, g, b, std::min(alpha, (uint32_t)255));
    }
 
    void etc1_block::unpack_color4(uint32_t& r, uint32_t& g, uint32_t& b, uint16_t packed_color4, bool scaled)

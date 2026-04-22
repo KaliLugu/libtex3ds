@@ -29,7 +29,6 @@
 #include <cassert>
 #include <cstdio>
 #include <string>
-#include <vector>
 
 namespace Tex3DS
 {
@@ -64,9 +63,8 @@ struct SubImage
 		if (name.empty ())
 			return;
 
-		std::vector<char> path (name.begin (), name.end ());
-		path.emplace_back (0);
-		this->name = ::basename (path.data ());
+		size_t pos = name.find_last_of ("/\\");
+		this->name = (pos != std::string::npos) ? name.substr (pos + 1) : name;
 	}
 
 	bool operator< (const SubImage &rhs) const

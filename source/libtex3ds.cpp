@@ -38,7 +38,6 @@
 #include <cstring>
 #include <queue>
 #include <set>
-#include <stdexcept>
 #include <vector>
 
 namespace Tex3DS
@@ -111,11 +110,17 @@ Tex3DS::Image Invocation::load_image (const Tex3DS::Image &img)
 
 	// check for valid width
 	if (width > max_image_width)
-		throw std::runtime_error ("Invalid width");
+	{
+		std::fprintf (stderr, "Invalid width\n");
+		return img;
+	}
 
 	// check for valid height
 	if (height > max_image_height)
-		throw std::runtime_error ("Invalid height");
+	{
+		std::fprintf (stderr, "Invalid height\n");
+		return img;
+	}
 
 	// apply border/edge
 	output_width  = potCeil (img.w);
@@ -266,10 +271,10 @@ void write_buffer (FILE *fp, const void *buffer, size_t size)
 	while (pos < size)
 	{
 		size_t rc = std::fwrite (buf + pos, 1, size - pos, fp);
-		if (rc <= 0)
+		if (rc == 0)
 		{
 			std::fclose (fp);
-			throw std::runtime_error ("Failed to output data");
+			return;
 		}
 
 		pos += rc;
@@ -439,7 +444,8 @@ void Invocation::write_image_data (FILE *fp)
 	if (buffer.empty ())
 	{
 		std::fclose (fp);
-		throw std::runtime_error ("Failed to compress data");
+		std::fprintf (stderr, "Failed to compress data\n");
+		return;
 	}
 
 	// output data
@@ -456,7 +462,10 @@ void Invocation::write_output_data ()
 
 	FILE *fp = std::fopen (params.output_path.c_str (), "wb");
 	if (!fp)
-		throw std::runtime_error ("Failed to open output file");
+	{
+		std::fprintf (stderr, "Failed to open output file\n");
+		return;
+	}
 
 	if (!output_raw)
 		write_tex3ds_header (fp);
@@ -473,25 +482,9 @@ int Invocation::go ()
 	if (params.process_format == ETC1 || params.process_format == ETC1A4 || params.process_format == AUTO_ETC1)
 		rg_etc1::pack_etc1_block_init ();
 
-	try
-	{
-		Tex3DS::Image img = load_image (params.input_img);
-
-		// process each sub-image
-		process_image (img);
-
-		// write output data
-		write_output_data ();
-	}
-	catch (const std::exception &e)
-	{
-		std::fprintf (stderr, "%s\n", e.what ());
-		return EXIT_FAILURE;
-	}
-	catch (...)
-	{
-		return EXIT_FAILURE;
-	}
+	Tex3DS::Image img = load_image (params.input_img);
+	process_image (img);
+	write_output_data ();
 
 	return EXIT_SUCCESS;
 }

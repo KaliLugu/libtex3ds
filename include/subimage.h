@@ -24,8 +24,6 @@
 
 #include "libtex3ds.h"
 
-#include <libgen.h>
-
 #include <cassert>
 #include <cstdio>
 #include <string>
