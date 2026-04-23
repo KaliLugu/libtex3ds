@@ -1,19 +1,19 @@
-#/bin/bash
+#!/bin/bash
+TARGET="${1:-native}"
+BUILD_DIR="build"
 
-# clean
-rm -rf build
-rm -f libtex3ds.a
-rm -f libtex3ds.h
-rm -f example/libtex3ds.a
-rm -f example/libtex3ds.h
+rm -rf "${BUILD_DIR}" libtex3ds.a libtex3ds.h
 
-# build lib
-mkdir -p build
-cmake -S . -B build
-make -C build
+if [ "${TARGET}" = "3ds" ]; then
+    cmake -S . -B "${BUILD_DIR}" \
+        -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/3DS.cmake \
+        -DCMAKE_BUILD_TYPE=Release
+else
+    cmake -S . -B "${BUILD_DIR}" -DCMAKE_BUILD_TYPE=Release
+fi
 
-# copy lib to current directory
-cp build/libtex3ds.a ./
-cp build/libtex3ds.a ./example
+cmake --build "${BUILD_DIR}"
+cp "${BUILD_DIR}/libtex3ds.a" ./
+cp "${BUILD_DIR}/libtex3ds.a" ./example
 cp public/libtex3ds.h ./
 cp public/libtex3ds.h ./example
